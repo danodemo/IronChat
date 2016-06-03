@@ -14,16 +14,12 @@ public class WebChatClient {
 
     public String sendMessage(String userMessage) throws Exception {
         // connect to the server on the target port
+        //homeIP: 10.0.0.2   TechSquare>CodeSchoolIP: 172.168.4.15
         Socket clientSocket = new Socket("172.168.4.15", 8005);
 
         // once we connect to the server, we also have an input and output stream
         PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
-//        Scanner inputScanner = new Scanner(System.in);
-//        while (true) {
-//            System.out.print(">");
-//            String userInput = inputScanner.nextLine();
             out.println(userMessage);
 
 
@@ -34,13 +30,9 @@ public class WebChatClient {
                     break;
                 }
                 System.out.println("Server::" + serverResponse);
+                clientSocket.close();
                 return serverResponse;
             }
-//            if (userMessage.equalsIgnoreCase("exit")) {
-//                break;
-//            }
-//        }
-
         // close the connection
         clientSocket.close();
         return serverResponse;
